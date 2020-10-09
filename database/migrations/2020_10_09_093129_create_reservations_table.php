@@ -20,6 +20,10 @@ class CreateReservationsTable extends Migration
             $table->dateTime('end_date');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->cascadeOnDelete();
         });
     }
 
