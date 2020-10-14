@@ -10,7 +10,8 @@ class Chalet extends Model
     public function rates(){
         return $this->morphMany(Rating::class , "ratable");
     }
+
     public function reservationChalet(){
-       // return $this->
+        return $this->hasMany(ChaletReservation::class);
     }
 }

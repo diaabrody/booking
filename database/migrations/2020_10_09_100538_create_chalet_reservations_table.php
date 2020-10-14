@@ -18,8 +18,10 @@ class CreateChaletReservationsTable extends Migration
             $table->unsignedBigInteger('chalet_id');
             $table->unsignedBigInteger('reservation_id');
             $table->boolean('status')->default(0);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
-            $table->primary(['chalet_id' , 'reservation_id']);
+            $table->unique(['chalet_id' , 'reservation_id']);
             $table->foreign('chalet_id')
                 ->references('id')
                 ->on('chalets')
