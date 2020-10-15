@@ -88,6 +88,6 @@ class Handler extends ExceptionHandler
             $statusCode = $exception->getStatusCode();
             return $this->respondWithError($statusCode , $statusCode , $exception->getMessage());
         }
-        return $this->respondWithUnexpectedError('Unexpected Error Occurred');
+        return $this->respondWithUnexpectedError("Unexpected Error Occurred");
     }
 }

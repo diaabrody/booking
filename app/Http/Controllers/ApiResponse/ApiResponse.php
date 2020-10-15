@@ -102,4 +102,9 @@ trait ApiResponse
         return $this->respondWithError($errorCode , $errorCode , 'The specified URL cannot be found');
     }
 
+    public function getResoueceCollectionResponse($result){
+        $data = $this->respondWithSuccessArray();
+        return array_merge($data , $result);
+    }
+
 }
