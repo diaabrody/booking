@@ -26,6 +26,7 @@ Route::prefix('auth')->middleware(['api'])->group(function ($router){
     Route::post('refresh' , 'AuthController@refresh');
 });
 
+//Route::prefix('chalets')->middleware(['auth'])->group(function (){
+//
+//});
 Route::get('/chalets' , 'ChaletController@index');
-
-

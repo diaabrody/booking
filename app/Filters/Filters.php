@@ -5,6 +5,7 @@ namespace App\Filters;
 
 
 
+use App\Repositories\Interfaces\Chalet\IChaletRepository;
 use Illuminate\Http\Request;
 
 class Filters
@@ -14,6 +15,10 @@ class Filters
     protected $request ;
     protected $builder;
 
+    /**
+     * Filters constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request=$request;

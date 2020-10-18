@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/csss', function () {
+
+    $subQuery = 'SELECT chalet_id FROM chalet_reservations WHERE NOT( end_date< "2020-10-15 " OR start_date >"2020-10-18")';
+    dd( DB::select($subQuery));
+
+   // $query= \App\Chalet::whereNotIn('id' , DB::select($subQuery))->get();
+    //dd($query);sss
 });

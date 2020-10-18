@@ -17,7 +17,22 @@ class Chalet extends Model
         return $this->hasMany(ChaletReservation::class);
     }
 
+
+    public function ChaletView(){
+       return $this->belongsTo(ChaletView::class);
+    }
+
+    public function ChaletType()
+    {
+        return $this->belongsTo(ChaletType::class);
+    }
+
+    public function city(){
+        return $this->hasOneThrough(City::class , Resort::class);
+    }
+
     public function scopeFilter($query , ChaletFilters $filters){
+       $query->where('isActive' , 1);
        return $filters->apply($query);
     }
 }
