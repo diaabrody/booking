@@ -16,8 +16,13 @@ class CreateRatingsTable extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->decimal('rating');
-            $table->integer('ratable_id');
+            $table->unsignedBigInteger('ratable_id');
             $table->string('ratable_type');
+            $table->unsignedBigInteger('user_id');
+            $table->text('review')->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

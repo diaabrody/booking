@@ -28,6 +28,7 @@ class CreateChaletsTable extends Migration
             $table->integer('floor_numbers');
             $table->integer('capacity');
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('total_views')->default(0);
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('resort_id');
             $table->unsignedBigInteger('type_id');

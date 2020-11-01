@@ -31,10 +31,12 @@ class ChaletRepository extends BaseRepository implements IChaletRepository
      * @param $checkOutDate
      * @return Collection
      */
-    public function fetchChaletsIdsByCheckInOutDates($checkInDate, $checkOutDate): Collection {
+    public function fetchReservedChaletsIds($checkInDate, $checkOutDate): Collection {
         $subQuery = 'SELECT chalet_id , status FROM chalet_reservations WHERE  NOT( (end_date < :start_date OR start_date > :end_date) AND status =1)';
         return collect(DB::select($subQuery , ['end_date'=> $checkOutDate,'start_date'=>$checkInDate]))->pluck('chalet_id');
     }
+
+
 
     /**
      * @param $builder
@@ -83,6 +85,31 @@ class ChaletRepository extends BaseRepository implements IChaletRepository
     public function fetchByChaletCapacityAndReturnBuilder(&$builder , $capacity){
         $builder->where('capacity' , '>=' , $capacity)
             ->orderBy('capacity' , 'asc');
+    }
+
+    public function fetchNotReservedChaletsByChaletsReservedIdsAndReturnBuilder(&$builder ,array  $chaletsReservedIds){
+        $builder->where('isActive' , 1)->whereNotIn('id',$chaletsReservedIds);
+    }
+
+    /**
+     * @param $id
+     */
+    public function incrementChaletViewsOne($id)
+    {
+       $this->findById($id)->increment('total_views');
+    }
+
+    /**
+     * @param $builder
+     */
+    public function fetchChaletsHasDiscount(&$builder){
+        $builder->where('discount' ,'>' , 0)->orderBy('discount' ,'desc');
+    }
+
+
+    public function getRatingInDetails($chalet = null){
+        $chalet = $chalet?:$this->model;
+
     }
 
 }

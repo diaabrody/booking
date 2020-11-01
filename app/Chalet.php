@@ -3,36 +3,72 @@
 namespace App;
 
 use App\Filters\ChaletFilters;
+use App\Repositories\Interfaces\Chalet\IChaletRepository;
+use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 
 class Chalet extends Model
 {
     public const LIMIT_NUMBER = 20;
-    //
-    public function rates(){
-        return $this->morphMany(Rating::class , "ratable");
-    }
+    protected  $with =['chaletView' ,'ChaletType', 'city' , 'resort'];
 
+
+
+    //
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function reservationChalet(){
         return $this->hasMany(ChaletReservation::class);
     }
 
 
-    public function ChaletView(){
-       return $this->belongsTo(ChaletView::class);
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function chaletView(){
+       return $this->belongsTo(ChaletView::class , 'chalet_view_id');
     }
 
-    public function ChaletType()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function chaletType()
     {
-        return $this->belongsTo(ChaletType::class);
+        return $this->belongsTo(ChaletType::class ,'type_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function city(){
-        return $this->hasOneThrough(City::class , Resort::class);
+        return $this->belongsTo(City::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function resort(){
+        return $this->belongsTo(Resort::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function views(){
+        return $this->morphMany(UserView::class ,'viewable');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function rates(){
+        return $this->morphMany(Rating::class , 'ratable');
+    }
+
 
     public function scopeFilter($query , ChaletFilters $filters){
-       $query->where('isActive' , 1);
        return $filters->apply($query);
     }
 }

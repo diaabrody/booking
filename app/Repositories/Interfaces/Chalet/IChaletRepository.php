@@ -11,5 +11,7 @@ use Illuminate\Support\Collection;
 
 interface IChaletRepository extends IRepository
 {
-    public function fetchChaletsByFilters($filers):LengthAwarePaginator;
+    public function fetchChaletsByFilters($filers);
+    public function fetchReservedChaletsIds($checkInDate, $checkOutDate): Collection;
+    public function incrementChaletViewsOne($id);
 }

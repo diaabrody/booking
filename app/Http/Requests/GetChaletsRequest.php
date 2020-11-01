@@ -31,7 +31,8 @@ class GetChaletsRequest extends FormRequest
             'resort_id'=>'exists:resorts,id' ,
             'chalet_type_id'=>'exists:chalet_types,id' ,
             'chalet_view_id'=>'exists:chalet_views,id' ,
-            'price_range'=>['string' , new PriceRange]
+            'price_range'=>['string' , new PriceRange] ,
+            'capacity' =>'int|min:1'
         ];
     }
     public function messages()

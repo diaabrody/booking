@@ -26,7 +26,14 @@ Route::prefix('auth')->middleware(['api'])->group(function ($router){
     Route::post('refresh' , 'AuthController@refresh');
 });
 
-//Route::prefix('chalets')->middleware(['auth'])->group(function (){
-//
-//});
-Route::get('/chalets' , 'ChaletController@index');
+Route::prefix('chalets')->middleware(['api'])->group(function (){
+    Route::get('/' , 'ChaletController@index');
+    Route::get('/{id}' , 'ChaletController@show');
+    Route::post('/' , 'ChaletController@store');
+
+    Route::prefix('{id}/rates')->group(function (){
+        Route::get('/' , 'ChaletRatesController@index');
+        Route::post('/' , 'ChaletRatesController@store');
+        Route::delete('/' , 'ChaletRatesController@destroy');
+    });
+});

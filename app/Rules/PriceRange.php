@@ -33,7 +33,7 @@ class PriceRange implements Rule
            if (is_numeric($priceFrom) && is_numeric($priceTo)){
                $priceFrom = (double)$priceFrom;
                $priceTo = (double) $priceTo;
-               return ($priceFrom<=$priceTo);
+               return (($priceFrom>=1 && $priceTo>=1)&&$priceFrom<=$priceTo);
            }
        }
        return  false;

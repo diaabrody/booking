@@ -28,7 +28,8 @@ class Filters
     public function apply($builder){
         $this->builder = $builder;
 
-        foreach ($this->getFilters() as $method => $parameter){
+        foreach ($this->getFilters() as $cmd => $parameter){
+                $method = $this->filters[$cmd];
                 if (method_exists($this , $method)){
                     $this->$method($parameter);
                 }
@@ -38,6 +39,6 @@ class Filters
     }
 
     private function getFilters(){
-       return $this->request->only($this->filters);
+       return $this->request->only(array_keys($this->filters));
     }
 }

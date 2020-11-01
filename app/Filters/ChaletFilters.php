@@ -19,53 +19,56 @@ class ChaletFilters extends Filters
     }
 
     protected $filters = [
-                            'checkin_date',
-                            'checkout_date',
-                            'resort_id' ,
-                            'chalet_type_id',
-                            'chalet_view_id',
-                            'city_id',
-                            'price_range',
-                            'capacity'
+                            'checkin_date' =>'filterQueryByCheckinDate',
+                            'checkout_date' =>'filterQueryByCheckoutDate',
+                            'resort_id' =>'filterQueryByResortId' ,
+                            'chalet_type_id' => 'filterQueryByChaletTypeId',
+                            'chalet_view_id' =>'filterQueryByChaletViewId',
+                            'city_id' =>'filterQueryByCityId',
+                            'price_range' =>'filterQueryByPriceRange',
+                            'capacity' =>'filterQueryByCapacity' ,
+                            'discount'=>'getChaletsHasDiscount'
                         ];
 
-    public function checkin_date($date){
+    public function filterQueryByCheckinDate($date){
         if($this->isCheckOutExists($date)){
             $checkout_date= $this->request->input('checkout_date');
             $results = $this->chaletRepository
-                ->fetchChaletsIdsByCheckInOutDates($date ,$checkout_date)
+                ->fetchReservedChaletsIds($date ,$checkout_date)
                 ->toArray();
-            return $this->builder->whereNotIn('id',$results);
+            $this
+                ->chaletRepository
+                ->fetchNotReservedChaletsByChaletsReservedIdsAndReturnBuilder($this->builder,$results);
         }
         return $this->builder;
     }
 
-    public function city_id($cityId){
+    public function filterQueryByCityId($cityId){
         $this->chaletRepository->fetchByCityIdAndReturnBuilder($this->builder , $cityId);
         return $this->builder;
     }
 
-    public function resort_id($resortId){
+    public function filterQueryByResortId($resortId){
         $this->chaletRepository->fetchByResortIdAndReturnBuilder($this->builder , $resortId);
         return $this->builder;
     }
 
-    public function chalet_type_id($typeId){
+    public function filterQueryByChaletTypeId($typeId){
         $this->chaletRepository->fetchByChaletTypeAndReturnBuilder($this->builder,$typeId);
         return $this->builder;
     }
 
-    public function chalet_view_id($chaletViewId){
+    public function filterQueryByChaletViewId($chaletViewId){
         $this->chaletRepository->fetchByChaletViewAndReturnBuilder($this->builder,$chaletViewId);
         return $this->builder;
     }
 
-    public function price_range($priceRange){
+    public function filterQueryByPriceRange($priceRange){
         $this->chaletRepository->fetchByPriceRangeAndReturnBuilder($this->builder , $this->processPriceRange($priceRange));
         return $this->builder;
     }
 
-    public function capacity($capacity){
+    public function filterQueryByCapacity($capacity){
         $this->chaletRepository->fetchByChaletCapacityAndReturnBuilder($this->builder ,$capacity);
         return $this->builder;
     }
@@ -76,5 +79,10 @@ class ChaletFilters extends Filters
 
     private function isCheckOutExists($date){
         return (!empty($date)&&$this->request->has('checkout_date') && !empty($this->request->has('checkout_date')));
+    }
+
+    public function getChaletsHasDiscount($value){
+        $this->chaletRepository->fetchChaletsHasDiscount($this->builder);
+        return $this->builder;
     }
 }

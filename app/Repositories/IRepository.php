@@ -6,10 +6,12 @@ namespace App\Repositories;
 
 interface IRepository
 {
-    public function all();
-    public function findById();
-    public function  create();
-    public function update();
-    public function delete();
+    public function all($filters = []);
+    public function findById($id);
+    public function create(array $arr);
+    public function update( $id , array  $arr);
+    public function delete($id);
+    public function set($model);
+    public function get();
 
 }

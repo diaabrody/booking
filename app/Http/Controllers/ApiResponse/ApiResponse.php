@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApiResponse;
 
 
 use App\ApiCode;
-use App\Http\Controllers\ApiResponse\MyResponseBuilder as ResponseBuilder  ;
+use App\Http\Controllers\ApiResponse\MyResponseBuilder as ResponseBuilder ;
 
 trait ApiResponse
 {
@@ -16,6 +16,7 @@ trait ApiResponse
      * @param null $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
+
     public function respondWithError($api_code , $http_code , $message = null , $data = null){
         return ResponseBuilder::asError($api_code)
             ->withMessage($message)
@@ -102,7 +103,7 @@ trait ApiResponse
         return $this->respondWithError($errorCode , $errorCode , 'The specified URL cannot be found');
     }
 
-    public function getResoueceCollectionResponse($result){
+    public function getResourceCollectionResponseAsArray($result){
         $data = $this->respondWithSuccessArray();
         return array_merge($data , $result);
     }
