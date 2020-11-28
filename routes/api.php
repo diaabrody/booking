@@ -37,3 +37,5 @@ Route::prefix('chalets')->middleware(['api'])->group(function (){
         Route::delete('/' , 'ChaletRatesController@destroy');
     });
 });
+
+Route::get('/suggest/{query}', 'SuggestController@index');

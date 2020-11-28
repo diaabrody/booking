@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('search' , function (){
+    return \App\City::search('Howe')->take(10)->get();
+});
 
 

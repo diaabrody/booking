@@ -26,9 +26,7 @@ class ChaletRatingCollection extends ResourceCollection
                 "updatedAt" =>$row->updated_at
             ];
         });
-
-        $result= ["data"=>$chaletsCollection->toArray()];
-        return $this->getResourceCollectionResponseAsArray($result);
+        return $this->getResourceCollectionResponseAsArray($chaletsCollection->toArray());
 
     }
 }

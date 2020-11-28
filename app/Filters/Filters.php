@@ -12,7 +12,7 @@ class Filters
 {
     protected $filters = [];
 
-    protected $request ;
+    public $request ;
     protected $builder;
 
     /**

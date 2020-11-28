@@ -28,10 +28,12 @@ class ChaletsCollection extends ResourceCollection
                     "markup"=>$row->markup ,
                     "isActive"=>$row->isActive,
                     "description"=>$row->description,
-                    "roomsNumbers"=>$row->rooms_numbers,
-                    "bedsNumbers"=>$row->beds_numbers,
-                    "floorNumbers"=>$row->floor_numbers,
+                    "roomsNumber"=>$row->rooms_number,
+                    "bedsNumber"=>$row->beds_number,
+                    "floorsNumber"=>$row->floors_number,
+                    "bathroomsNumber"=>$row->bathroomsNumber,
                     "capacity"=>$row->capacity,
+                    "area"=>$row->area,
                     "view" =>$row->chaletView,
                     "type" =>$row->chaletType,
                     "resort" =>$row->resort,
@@ -40,8 +42,6 @@ class ChaletsCollection extends ResourceCollection
                     "updatedAt" =>$row->updated_at,
             ];
         });
-
-        $result= ["data"=>$chaletsCollection->toArray()];
-        return $this->getResourceCollectionResponseAsArray($result);
+        return $this->getResourceCollectionResponseAsArray($chaletsCollection->toArray());
     }
 }

@@ -104,8 +104,12 @@ trait ApiResponse
     }
 
     public function getResourceCollectionResponseAsArray($result){
+        return $this->respondWithData($result);
+    }
+    // success
+    public function respondWithData($result){
         $data = $this->respondWithSuccessArray();
-        return array_merge($data , $result);
+        return array_merge($data , ["data"=>$result]);
     }
 
 }

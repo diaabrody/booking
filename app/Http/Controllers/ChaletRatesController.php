@@ -21,7 +21,6 @@ class ChaletRatesController extends Controller
      */
     public function __construct(IChaletRatingRepository $chaletRatingRepository)
     {
-        // $this->middleware('auth:api')->except(['index']);
         $this->chaletRatingRepository = $chaletRatingRepository;
     }
 
@@ -29,7 +28,7 @@ class ChaletRatesController extends Controller
      * @param $chaletId
      * @return ChaletRatingCollection|\Symfony\Component\HttpFoundation\Response
      */
-    public function index($chaletId)
+    public function index($chaletId )
     {
         if (request()->exists('totalRating')) {
             $ratings = $this->chaletRatingRepository->getChaletTotalPercentageForEveryStart($chaletId);
@@ -61,7 +60,6 @@ class ChaletRatesController extends Controller
         $ratingObject = $this->chaletRatingRepository->rate($rateArr, $chaletId, $userId);
         return $this->respond($ratingObject);
     }
-
     /**
      * @param $ratings
      * @return array
