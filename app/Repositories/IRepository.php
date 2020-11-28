@@ -6,7 +6,7 @@ namespace App\Repositories;
 
 interface IRepository
 {
-    public function all($filters = [] , $orderBy = array());
+    public function all($filters = [] , $orderBy = array() , $with =[]);
     public function findById($id);
     public function create(array $arr);
     public function update( $id , array  $arr);

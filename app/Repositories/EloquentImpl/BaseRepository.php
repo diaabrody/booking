@@ -19,19 +19,20 @@ class BaseRepository implements IRepository
     public function __construct(Model $model)
     {
         $this->model = $model;
+        $this->query = $model;
 
     }
 
     /**
      * @param array $filters
      * @param array $orderBy
+     * @param array $with
+     * @param array $withCount
      * @return Collection
      */
-    public function all($filters = [], $orderBy = array()): Collection
+    public function all($filters = [], $orderBy = array(), $with = [], $withCount = []): Collection
     {
-        if (count($orderBy) > 0)
-            $this->applyOrders($orderBy);
-        $this->applyFilters($filters);
+        $this->prepareSelect($filters, $orderBy, $with, $withCount);
         $result = $this->query->get();
         $this->resetQuery();
         return $result;
@@ -58,19 +59,18 @@ class BaseRepository implements IRepository
      * @param array $filters
      * @param array $orderBy
      * @param null $limit
+     * @param array $with
+     * @param array $withCount
      * @return mixed
      */
-    public function pagniate($filters = [], $orderBy = array(), $limit = null): LengthAwarePaginator
+    public function pagniate($filters = [], $orderBy = array(), $limit = null, $with = [], $withCount = []): LengthAwarePaginator
     {
-        if (count($orderBy) > 0)
-            $this->applyOrders($orderBy);
-
-        $limitNumber = $this::LIMIT_NUMBER;
+        $this->prepareSelect($filters, $orderBy, $with, $withCount);
         if ($limit && is_int($limit))
             $limitNumber = $limit;
         else if ($this->model::LIMIT_NUMBER)
             $limitNumber = $this->model::LIMIT_NUMBER;
-        $this->applyFilters($filters);
+
         $result = $this->query->paginate($limitNumber);
         $this->resetQuery();
         return $result;
@@ -83,13 +83,13 @@ class BaseRepository implements IRepository
      */
     protected function orderBy($field, $value = "asc")
     {
-        return $this->getQuery()->orderBy($field, $value);
+        return $this->query->orderBy($field, $value);
     }
 
 
     protected function resetQuery()
     {
-        $this->query = null;
+        $this->query = $this->model;
     }
 
 
@@ -100,7 +100,15 @@ class BaseRepository implements IRepository
     private function applyFilters($filters = [])
     {
         foreach ($filters as $field => $value) {
-            $this->query = $this->getQuery()->where($field, $value);
+            $this->query = $this->query->where($field, $value);
+        }
+    }
+
+    private function with($with = [])
+    {
+
+        foreach ($with as $relation) {
+            $this->query = $this->query->with($relation);
         }
     }
 
@@ -152,5 +160,30 @@ class BaseRepository implements IRepository
     public function get(): Model
     {
         return $this->model;
+    }
+
+    private function withCount($withCount = [])
+    {
+        foreach ($withCount as $relation) {
+            $this->query = $this->query->withCount($relation);
+        }
+    }
+
+    /**
+     * @param array $filters
+     * @param array $orderBy
+     * @param array $with
+     * @param array $withCount
+     */
+    protected function prepareSelect(array $filters, array $orderBy, array $with, array $withCount): void
+    {
+        if ($filters && count($filters) > 0)
+            $this->applyFilters($filters);
+        if ($orderBy && count($orderBy) > 0)
+            $this->applyOrders($orderBy);
+        if ($with && count($with) > 0)
+            $this->with($with);
+        if ($withCount && count($withCount) > 0)
+            $this->withCount($withCount);
     }
 }

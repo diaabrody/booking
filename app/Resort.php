@@ -8,9 +8,6 @@ use Laravel\Scout\Searchable;
 class Resort extends Model
 {
     use Searchable;
-
-    protected $with =['city'];
-
     protected $hidden =['created_at' , 'updated_at'];
 
     //

@@ -9,12 +9,25 @@ use function Clue\StreamFilter\fun;
 class ChaletsCollection extends ResourceCollection
 {
     use ApiResponse;
+
+    /**
+     * @var bool
+     */
+    private $withoutBuilderResponse;
+
     /**
      * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
+    public function __construct($resource, $withoutBuilderResponse = false)
+    {
+        parent::__construct($resource);
+        $this->withoutBuilderResponse = $withoutBuilderResponse;
+    }
+
     public function toArray($request)
     {
         $chaletsCollection = $this->collection->map(function ($row){
@@ -42,6 +55,8 @@ class ChaletsCollection extends ResourceCollection
                     "updatedAt" =>$row->updated_at,
             ];
         });
+        if ($this->withoutBuilderResponse)
+            return $chaletsCollection;
         return $this->getResourceCollectionResponseAsArray($chaletsCollection->toArray());
     }
 }

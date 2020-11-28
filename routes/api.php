@@ -38,4 +38,8 @@ Route::prefix('chalets')->middleware(['api'])->group(function (){
     });
 });
 
+Route::prefix('city')->middleware(['api'])->group(function ($router){
+    Route::get('/' , 'CityController@index');
+});
+
 Route::get('/suggest/{query}', 'SuggestController@index');
