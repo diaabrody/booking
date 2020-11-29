@@ -33,6 +33,7 @@ final class Versions
      * @internal
      */
     const VERSIONS          = array (
+  'algolia/algoliasearch-client-php' => '2.7.1@19c0a6c1ef44c0aafaf6c6238c1509ebde2d1a35',
   'asm89/stack-cors' => 'v2.0.1@23f469e81c65e2fb7fc7bce371fbdc363fe32adf',
   'brick/math' => '0.9.1@283a40c901101e66de7061bd359252c013dcc43c',
   'clue/stream-filter' => 'v1.4.1@5a58cc30a8bd6a4eb8f856adf61dd3e013f53f71',
@@ -50,6 +51,7 @@ final class Versions
   'http-interop/http-factory-guzzle' => '1.0.0@34861658efb9899a6618cef03de46e2a52c80fc0',
   'jean85/pretty-package-versions' => '1.5.0@e9f4324e88b8664be386d90cf60fbc202e1f7fc9',
   'laravel/framework' => 'v7.27.0@17777a92da9b3cf0026f26462d289d596420e6d0',
+  'laravel/scout' => 'v8.4.0@1241ecf4e876b8fcb8311160b471e6915bc1ab66',
   'laravel/tinker' => 'v2.4.2@58424c24e8aec31c3a3ac54eb3adb15e8a0a067b',
   'lcobucci/jwt' => '3.3.3@c1123697f6a2ec29162b82f170dd4a491f524773',
   'league/commonmark' => '1.5.4@21819c989e69bab07e933866ad30c7e3f32984ba',
@@ -157,7 +159,7 @@ final class Versions
   'sebastian/version' => '2.0.1@99732be0ddb3361e16ad77b68ba41efc8e979019',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.9.1@bafc69caeb4d49c39fd0779086c03a3738cbb389',
-  'laravel/laravel' => 'No version set (parsed as 1.0.0)@',
+  'laravel/laravel' => 'dev-main@8d8757148098d382ae6ff966dd3305873e2323ce',
 );
 
     private function __construct()
