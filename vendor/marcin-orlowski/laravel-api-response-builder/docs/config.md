@@ -22,7 +22,7 @@
  * [min_code](#min_code)
  * [max_code](#max_code)
 
-## classes ##
+## converter ##
  
  `Response Builder` can auto-convert to be used as response `data`. The following classes are supported out of the
  box:
@@ -56,6 +56,9 @@
 
  See [Data Conversion](docs.md#data-conversion) docs for closer details wih examples.
  
+ **NOTE:** in case of data conversion problems add `RB_CONVERTER_DEBUG=true` entry to your `.env` file (also see [debug](#debug)
+ for related config options) then peek Laravel log to see what converter was used for each type of data and why it was choosen.
+ 
 ## debug ##
 
 ```php
@@ -66,6 +69,13 @@
            'trace_key' => 'trace',
            'trace_enabled' => env('APP_DEBUG', false),
     ],
+
+    // Controls debugging features of payload converter class.
+    'converter' => [
+        // Set to true to figure out what converter is used for given data payload and why.
+        'debug_enabled' => env('RB_CONVERTER_DEBUG', false),
+    ],
+
 ],
 ```
 
@@ -101,11 +111,15 @@
 
  To prevent escaping, add JSON_UNESCAPED_UNICODE:
  
-     JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_AMP|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE
+```php
+JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_AMP|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE
+```
 
  Laravel's default value:
  
-    JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_AMP|JSON_HEX_QUOT
+```php
+JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_AMP|JSON_HEX_QUOT
+```
 
  See [json_encode() manual](http://php.net/manual/en/function.json-encode.php) for more details.
 
