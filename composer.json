@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "marcin-orlowski/laravel-api-response-builder": "^8.0",
         "sentry/sentry-laravel": "^1.9",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "fzaninotto/faker": "^1.9.1"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

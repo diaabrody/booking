@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### 2.5.0 (2020-09-14)
+
+- Support the `timeout` and `proxy` options for the Symfony HTTP Client (#1084)
+
 ### 2.4.3 (2020-08-13)
 
 - Fix `Options::setEnvironment` method not accepting `null` values (#1057)
