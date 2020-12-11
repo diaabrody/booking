@@ -28,10 +28,10 @@ Route::prefix('auth')->middleware(['api'])->group(function ($router){
 
 Route::prefix('chalets')->middleware(['api'])->group(function (){
     Route::get('/' , 'ChaletController@index');
-    Route::get('/{id}' , 'ChaletController@show');
+    Route::get('/{id}' , 'ChaletController@show')->where(["id"=>"[0-9]+"]);
     Route::post('/' , 'ChaletController@store');
 
-    Route::prefix('{id}/rates')->group(function (){
+    Route::prefix('{id}/rates')->where(["id"=>"[0-9]+"])->group(function (){
         Route::get('/' , 'ChaletRatesController@index');
         Route::post('/' , 'ChaletRatesController@store');
         Route::delete('/' , 'ChaletRatesController@destroy');

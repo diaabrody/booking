@@ -66,10 +66,11 @@ class BaseRepository implements IRepository
     public function pagniate($filters = [], $orderBy = array(), $limit = null, $with = [], $withCount = []): LengthAwarePaginator
     {
         $this->prepareSelect($filters, $orderBy, $with, $withCount);
-        if ($limit && is_int($limit))
-            $limitNumber = $limit;
+        if ($limit &&  is_numeric(($limit)))
+            $limitNumber = (int)$limit;
         else if ($this->model::LIMIT_NUMBER)
             $limitNumber = $this->model::LIMIT_NUMBER;
+
 
         $result = $this->query->paginate($limitNumber);
         $this->resetQuery();

@@ -52,7 +52,7 @@ class ChaletController extends Controller
      */
     public function index(GetChaletsRequest $request, ChaletFilters $filers)
     {
-        if (!$request->exists('city_id') && !$request->exists('resort_id') &&!$request->exists('query')) {
+        if (!$request->exists('city_id') && !$request->exists('resort_id') &&$request->exists('query')) {
             $this->MatchQuery();
         }
         return new ChaletsCollection($this->getChalets($filers));

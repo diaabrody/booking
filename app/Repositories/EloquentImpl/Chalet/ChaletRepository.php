@@ -7,12 +7,22 @@ namespace App\Repositories\EloquentImpl\Chalet;
 use App\Chalet;
 use App\Repositories\EloquentImpl\BaseRepository;
 use App\Repositories\Interfaces\Chalet\IChaletRepository;
+use App\Repositories\Interfaces\ChaletRating\IChaletRatingRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ChaletRepository extends BaseRepository implements IChaletRepository
 {
+    /**
+     * @var IChaletRatingRepository
+     */
+    private $chaletRatingRepository;
+
+    /**
+     * ChaletRepository constructor.
+     * @param Chalet $model
+     */
     public function __construct(Chalet $model)
     {
         parent::__construct($model);
@@ -119,6 +129,17 @@ class ChaletRepository extends BaseRepository implements IChaletRepository
     public function getRatingInDetails($chalet = null)
     {
         $chalet = $chalet ?: $this->model;
+    }
+
+    public function fetchTopTrendingChalets(&$builder)
+    {
+        $builder->select("*")->selectSub(function ($query) {
+            $ratable_type = '"' . addslashes(Chalet::class) . '"';
+            $query->from('ratings')
+                ->selectRaw('avg(`ratings`.`rating`)')
+                ->whereRaw('`chalets`.`id` = `ratings`.`ratable_id`')
+                ->whereRaw('`ratings`.`ratable_type`=' . $ratable_type);
+        }, 'avg_rating')->orderBy('total_views', 'desc')->orderBy('avg_rating', 'desc');
     }
 
 }

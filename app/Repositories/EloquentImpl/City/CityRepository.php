@@ -18,10 +18,10 @@ class CityRepository extends BaseRepository implements ICityRepository
         parent::__construct($model);
     }
 
-    public function findTopDestinationsCities($filters)
+    public function findTopDestinationsCities($filters, $limit = 5)
     {
-        $topDestinationsCities = $this->pagniate($filters, [], 5,[], ['resorts', 'chalets']);
-       return $topDestinationsCities->setCollection($topDestinationsCities->sortByDesc(function ($row) {
+        $topDestinationsCities = $this->pagniate($filters, [], $limit, [], ['resorts', 'chalets']);
+        return $topDestinationsCities->setCollection($topDestinationsCities->sortByDesc(function ($row) {
             return [$row->chalets_count, $row->resorts_count];
         }));
     }

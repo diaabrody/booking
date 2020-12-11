@@ -28,7 +28,7 @@ class ChaletRatesController extends Controller
      * @param $chaletId
      * @return ChaletRatingCollection|\Symfony\Component\HttpFoundation\Response
      */
-    public function index($chaletId )
+    public function index($chaletId)
     {
         if (request()->exists('totalRating')) {
             $ratings = $this->chaletRatingRepository->getChaletTotalPercentageForEveryStart($chaletId);

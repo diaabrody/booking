@@ -122,12 +122,7 @@ trait ApiResponse
     public function respondWithData($result)
     {
         $successResponse = $this->respondWithSuccessArray();
-        if (isset($result['meta'])) {
-            $successResponse['meta'] = $result['meta'];
-        }
-        if (isset($result['links'])) {
-            $successResponse['links'] = $result['links'];
-        }
+
         return array_merge($successResponse, ["data" => $result]);
     }
 
