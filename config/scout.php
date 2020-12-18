@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'algolia'),
+    'driver' => env('SCOUT_DRIVER', 'elasticsearch'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,5 +102,29 @@ return [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Elasticsearch Configuration
+        |--------------------------------------------------------------------------
+        |
+        | Here you may configure your Elasticsearch settings.
+        |
+        */
+    'elasticsearch' => [
+        'hosts' => [
+            env('ELASTICSEARCH_HOST', 'localhost'),
+             [
+                 'host'   => env('ELASTICSEARCH_HOST', 'localhost'),
+                 'port'   => env('ELASTICSEARCH_PORT', '9200'),
+                 'scheme' => env('ELASTICSEARCH_SCHEME', 'https'),
+                 'path'   => env('ELASTICSEARCH_PATH', '/elastic'),
+                 'user'   => env('ELASTICSEARCH_USER', 'username'),
+                 'pass'   => env('ELASTICSEARCH_PASS', 'password'),
+             ]
+        ],
+    ]
+
+
 
 ];
