@@ -38,7 +38,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 abstract class AbstractSessionListener implements EventSubscriberInterface
 {
-    const NO_AUTO_CACHE_CONTROL_HEADER = 'Symfony-Session-NoAutoCacheControl';
+    public const NO_AUTO_CACHE_CONTROL_HEADER = 'Symfony-Session-NoAutoCacheControl';
 
     protected $container;
     private $sessionUsageStack = [];
@@ -147,6 +147,10 @@ abstract class AbstractSessionListener implements EventSubscriberInterface
     {
         if (!$this->debug) {
             return;
+        }
+
+        if ($this->container && $this->container->has('session_collector')) {
+            $this->container->get('session_collector')();
         }
 
         if (!$requestStack = $this->container && $this->container->has('request_stack') ? $this->container->get('request_stack') : null) {

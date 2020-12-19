@@ -11,6 +11,6 @@ class ChaletSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Chalet::class ,1)->create();
+        factory(\App\Chalet::class ,20)->create();
     }
 }

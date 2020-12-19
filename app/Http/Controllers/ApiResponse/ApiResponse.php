@@ -27,14 +27,31 @@ trait ApiResponse
             ->withHttpCode($http_code)->build();
     }
 
+
     /**
-     * @param null $message
+     * @param string $message
+     * @param int $api_code
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function respondWithMessage($message = null)
-    {
-        return ResponseBuilder::asSuccess()
+    public function respondWithErrorMessage($message="Bad Request", $api_code = ApiCode::BAD_REQUEST_ERROR){
+        return ResponseBuilder::asError($api_code)
             ->withMessage($message)
+            ->withHttpCode($api_code)->build();
+    }
+
+    /**
+     * @param null $message
+     * @param int $http_code
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function respondWithMessage($message = null , $http_code =200)
+    {
+        if (is_array($message)){
+            $message = implode("," , $message);
+        }
+        return ResponseBuilder::asSuccess($http_code)
+            ->withMessage($message)
+            ->withHttpCode($http_code)
             ->build();
     }
 

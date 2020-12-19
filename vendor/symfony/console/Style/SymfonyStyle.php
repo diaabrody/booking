@@ -35,7 +35,7 @@ use Symfony\Component\Console\Terminal;
  */
 class SymfonyStyle extends OutputStyle
 {
-    const MAX_LINE_LENGTH = 120;
+    public const MAX_LINE_LENGTH = 120;
 
     private $input;
     private $questionHelper;
@@ -161,6 +161,16 @@ class SymfonyStyle extends OutputStyle
     public function note($message)
     {
         $this->block($message, 'NOTE', 'fg=yellow', ' ! ');
+    }
+
+    /**
+     * Formats an info message.
+     *
+     * @param string|array $message
+     */
+    public function info($message)
+    {
+        $this->block($message, 'INFO', 'fg=green', ' ', true);
     }
 
     /**

@@ -7,7 +7,7 @@ use Laravel\Scout\Searchable;
 
 class City extends Model
 {
-    use Searchable;
+  //  use Searchable;
     public const LIMIT_NUMBER = 20;
     protected $hidden =['created_at' , 'updated_at'];
 

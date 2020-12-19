@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\MailResetPasswordNotification;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstName', 'lastName', 'email', 'password' , 'type_id',
     ];
 
     /**
@@ -39,8 +41,18 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPasswordAttribute($password){
-        $this->attributes['password'] = Hash::make($password);
+    /**
+     * Automatically hash password
+     *
+     * @param String $value The password, maybe hashed already
+     *
+     * @return string|null
+     */
+    public function setPasswordAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['password'] = Hash::needsRehash($value) ? Hash::make($value) : $value;
+        }
     }
 
     public function getJWTIdentifier()
@@ -56,4 +68,17 @@ class User extends Authenticatable implements JWTSubject
     public function reservations(){
         return $this->hasMany(Reservation::class);
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordNotification($token));
+    }
+
+
 }

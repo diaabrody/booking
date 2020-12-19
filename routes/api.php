@@ -28,6 +28,8 @@ Route::prefix('auth')->middleware(['api'])->group(function ($router){
     Route::get('me' , 'AuthController@me');
     Route::post('logout'  , 'AuthController@logout');
     Route::post('refresh' , 'AuthController@refresh');
+    Route::post('forget' , 'AuthController@forget');
+    Route::post('reset' , 'AuthController@doReset');
 });
 
 Route::prefix('chalets')->middleware(['api'])->group(function (){
