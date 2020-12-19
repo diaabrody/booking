@@ -105,12 +105,17 @@ class BaseRepository implements IRepository
         }
     }
 
-    private function with($with = [])
+    protected function with($with)
     {
-
-        foreach ($with as $relation) {
-            $this->query = $this->query->with($relation);
+        if (is_array($with)){
+            foreach ($with as $relation) {
+                $this->query = $this->query->with($relation);
+            }
+        }else{
+            $this->query =  $this->query->with($with);
         }
+
+        return $this;
     }
 
     /**

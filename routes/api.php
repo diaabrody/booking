@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->middleware('auth:api')->group(function (){
     Route::get('/user/history' , 'UserHistoryController@index');
+    Route::get('chalet-reservation', 'UserChaletReservationController@index');
+
 });
 
 Route::prefix('auth')->middleware(['api'])->group(function ($router){
@@ -47,5 +49,6 @@ Route::prefix('chalets')->middleware(['api'])->group(function (){
 Route::prefix('city')->middleware(['api'])->group(function ($router){
     Route::get('/' , 'CityController@index');
 });
+
 
 Route::get('/suggest/{query}', 'SuggestController@index');

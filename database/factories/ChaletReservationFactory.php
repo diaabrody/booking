@@ -14,6 +14,10 @@ $factory->define(\App\ChaletReservation::class, function (Faker $faker) {
         "reservation_id" =>function(){
             return factory(\App\Reservation::class)->create()->id;
         } ,
+
+        "user_id" =>function(){
+            return factory(\App\User::class)->create()->id;
+        } ,
         "chalet_id"=>function(){
             return factory(\App\Chalet::class)->create()->id;
         },

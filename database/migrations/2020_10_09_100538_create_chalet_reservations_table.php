@@ -16,6 +16,7 @@ class CreateChaletReservationsTable extends Migration
         Schema::create('chalet_reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('chalet_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('reservation_id');
             $table->boolean('status')->default(0);
             $table->dateTime('start_date');
@@ -30,6 +31,11 @@ class CreateChaletReservationsTable extends Migration
             $table->foreign('reservation_id')
                 ->references('id')
                 ->on('reservations')
+                ->cascadeOnDelete();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
         });
     }
