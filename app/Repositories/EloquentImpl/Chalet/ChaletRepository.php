@@ -32,9 +32,12 @@ class ChaletRepository extends BaseRepository implements IChaletRepository
      * @param $filers
      * @return mixed
      */
-    public function fetchChaletsByFilters($filers): LengthAwarePaginator
+    public function fetchChaletsByFilters($filers , $limit): LengthAwarePaginator
     {
-        return $this->model->filter($filers)->paginate($this->model::LIMIT_NUMBER);
+        if (!$limit || (is_numeric($limit) &&  $limit<=0)){
+            $limit = $this->model::LIMIT_NUMBER;
+        }
+        return $this->model->filter($filers)->paginate($limit);
     }
 
     /**
@@ -122,7 +125,7 @@ class ChaletRepository extends BaseRepository implements IChaletRepository
      */
     public function fetchChaletsHasDiscount(&$builder)
     {
-        $builder->where('discount', '>', 0)->orderBy('discount', 'desc');
+        $builder->where('discount', '>', 0)->inRandomOrder();
     }
 
 

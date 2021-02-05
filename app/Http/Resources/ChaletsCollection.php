@@ -38,6 +38,7 @@ class ChaletsCollection extends ResourceCollection
                 "lat" => $row->lat,
                 "location" => $row->location,
                 "discount" => $row->discount,
+                "price"=>$row->price,
                 "markup" => $row->markup,
                 "isActive" => $row->isActive,
                 "description" => $row->description,

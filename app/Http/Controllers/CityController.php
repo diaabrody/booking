@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CitiesCollection;
+use App\Http\Resources\CityResource;
 use App\Http\Resources\TopDestionationsCitiesCollection;
 use App\Repositories\Interfaces\City\ICityRepository;
 use Illuminate\Http\Request;
@@ -28,9 +29,18 @@ class CityController extends Controller
         if (request()->exists('topDestinationsCities')) {
             return new TopDestionationsCitiesCollection($this->cityRepository->findTopDestinationsCities($filters, $limit));
         }
-        if (request()->exists('limit')) {
-            return new CitiesCollection($this->respondWithData($this->cityRepository->pagniate($filters)));
-        }
+        if($limit)
+            return new CitiesCollection($this->cityRepository->pagniate(array() ,array(), $limit));
+
         return new CitiesCollection($this->cityRepository->all($filters));
+    }
+
+    public function show($id){
+       return new CityResource(
+           $this->cityRepository
+                ->with('resorts')
+                ->with('chalets')
+                ->withCount(['resorts','chalets'])
+                ->findById($id));
     }
 }

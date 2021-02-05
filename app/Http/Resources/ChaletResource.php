@@ -33,6 +33,7 @@ class ChaletResource extends JsonResource
             "lat" => $this->lat,
             "location" => $this->location,
             "discount" => $this->discount,
+            "price"=>$this->price,
             "markup" => $this->markup,
             "isActive" => $this->isActive,
             "description" => $this->description,

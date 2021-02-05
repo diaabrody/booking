@@ -55,16 +55,16 @@ class ChaletController extends Controller
         if (!$request->exists('city_id') && !$request->exists('resort_id') &&$request->exists('query')) {
             $this->MatchQuery();
         }
-        return new ChaletsCollection($this->getChalets($filers));
+        return new ChaletsCollection($this->getChalets($filers , $request->get('limit')?:null));
     }
 
     /**
      * @param ChaletFilters $filers
      * @return mixed
      */
-    private function getChalets(ChaletFilters $filers)
+    private function getChalets(ChaletFilters $filers , $limit)
     {
-        return $this->chaletRepository->fetchChaletsByFilters($filers);
+        return $this->chaletRepository->fetchChaletsByFilters($filers , $limit);
     }
 
     /**

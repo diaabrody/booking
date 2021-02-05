@@ -105,7 +105,7 @@ class BaseRepository implements IRepository
         }
     }
 
-    protected function with($with)
+    public function with($with)
     {
         if (is_array($with)){
             foreach ($with as $relation) {
@@ -124,7 +124,7 @@ class BaseRepository implements IRepository
      */
     public function findById($id): ?Model
     {
-        return $this->model->findOrFail($id);
+        return $this->query->findOrFail($id);
     }
 
     /**
@@ -168,11 +168,12 @@ class BaseRepository implements IRepository
         return $this->model;
     }
 
-    private function withCount($withCount = [])
+    public function withCount($withCount = [])
     {
         foreach ($withCount as $relation) {
             $this->query = $this->query->withCount($relation);
         }
+        return $this;
     }
 
     /**

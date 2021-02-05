@@ -30,5 +30,7 @@ class City extends Model
         return $this->hasMany(Chalet::class);
     }
 
-
+    public function images(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
