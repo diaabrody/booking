@@ -24,6 +24,10 @@ Route::prefix('user')->middleware('auth:api')->group(function (){
 
 });
 
+Route::prefix('owner')->middleware('auth:api')->group(function (){
+    Route::post('chalets' , 'ChaletOwnerController@store');
+});
+
 Route::prefix('auth')->middleware(['api'])->group(function ($router){
     Route::post('login'  , 'AuthController@login');
     Route::post('register' , 'AuthController@register');

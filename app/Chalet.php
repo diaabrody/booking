@@ -11,6 +11,7 @@ class Chalet extends Model
 {
     public const LIMIT_NUMBER = 20;
     protected  $with =['chaletView' ,'ChaletType', 'city' , 'resort'];
+    protected $guarded =[];
 
 
 

@@ -40,6 +40,7 @@ class CityController extends Controller
            $this->cityRepository
                 ->with('resorts')
                 ->with('chalets')
+                ->with('images')
                 ->withCount(['resorts','chalets'])
                 ->findById($id));
     }
